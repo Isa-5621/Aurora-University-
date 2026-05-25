@@ -1,0 +1,2052 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universidade Aurora - Portal Acadêmico</title>
+    <link href="https://cdn.jsdelivr.net/npm/fontsource-inter@5/index.css" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #C8A84E;
+            --gold-light: #E0C96E;
+            --gold-dark: #A88B3A;
+            --black: #0D0D0D;
+            --black-light: #1A1A1A;
+            --gray-dark: #2D2D2D;
+            --gray: #404040;
+            --gray-medium: #6B6B6B;
+            --gray-light: #9A9A9A;
+            --gray-lighter: #B0B0B0;
+            --white: #F5F5F5;
+            --white-pure: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== TOP NAVBAR ===== */
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--gray-dark);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .top-navbar.scrolled {
+            background: rgba(13, 13, 13, 0.98);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .nav-logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 20px;
+            color: var(--black);
+        }
+
+        .nav-logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 0.5px;
+        }
+
+        .nav-logo-text span { color: var(--gold); }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link {
+            color: var(--gray-lighter);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 8px 14px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            color: var(--gold);
+            border-color: var(--gold);
+            background: rgba(200, 168, 78, 0.08);
+        }
+
+        .nav-link.highlight {
+            color: var(--gold);
+            border-color: var(--gold);
+            background: rgba(200, 168, 78, 0.1);
+        }
+
+        .nav-link.highlight:hover {
+            background: rgba(200, 168, 78, 0.2);
+        }
+
+        .nav-mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 70px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.35;
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(13,13,13,0.9) 0%, rgba(13,13,13,0.5) 50%, rgba(13,13,13,0.8) 100%);
+        }
+
+        .hero-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(200, 168, 78, 0.15);
+            border: 1px solid var(--gold);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-title {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease 0.1s both;
+        }
+
+        .hero-title .gold { color: var(--gold); }
+
+        .hero-description {
+            font-size: 17px;
+            color: var(--gray-lighter);
+            max-width: 600px;
+            margin-bottom: 36px;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--black);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(200, 168, 78, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--gray-medium);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .hero-mec {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            animation: fadeInRight 1s ease 0.4s both;
+        }
+
+        .mec-badge {
+            width: 160px;
+            height: 160px;
+            background: linear-gradient(145deg, var(--gold), var(--gold-dark));
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 60px rgba(200, 168, 78, 0.3), 0 0 120px rgba(200, 168, 78, 0.1);
+            position: relative;
+        }
+
+        .mec-badge::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid var(--gold-light);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .mec-grade {
+            font-size: 56px;
+            font-weight: 900;
+            color: var(--black);
+            line-height: 1;
+        }
+
+        .mec-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--black);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .mec-text {
+            font-size: 14px;
+            color: var(--gold);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .mec-stars {
+            display: flex;
+            gap: 4px;
+        }
+
+        .mec-stars svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--gold);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.05); }
+        }
+
+        /* ===== SECTION COMMON ===== */
+        .section {
+            padding: 80px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 3.5vw, 40px);
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            font-size: 16px;
+            color: var(--gray-lighter);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ===== COURSES SECTION ===== */
+        .courses-section {
+            background: var(--black-light);
+        }
+
+        .courses-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .course-category {
+            margin-bottom: 60px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 30px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--gray-dark);
+        }
+
+        .category-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(200, 168, 78, 0.1);
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--gold);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .category-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .category-count {
+            font-size: 13px;
+            color: var(--gray-light);
+            margin-left: auto;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        .course-card {
+            background: var(--gray-dark);
+            border: 1px solid var(--gray);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(200, 168, 78, 0.15);
+        }
+
+        .card-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .card-price {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        .card-price small {
+            font-size: 11px;
+            color: var(--gray-light);
+            font-weight: 400;
+        }
+
+        .card-duration {
+            font-size: 12px;
+            color: var(--gold);
+            background: rgba(200, 168, 78, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .card-body {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .card-text {
+            flex: 1;
+        }
+
+        .card-desc {
+            font-size: 12px;
+            color: var(--gray-lighter);
+            line-height: 1.6;
+        }
+
+        .card-image {
+            width: 64px;
+            height: 64px;
+            border-radius: 10px;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 1px solid var(--gray);
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-footer {
+            padding: 14px 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .card-btn {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gold);
+            background: rgba(200, 168, 78, 0.1);
+            border: 1px solid rgba(200, 168, 78, 0.3);
+            padding: 8px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .card-btn:hover {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        /* ===== OFFERS SECTION ===== */
+        .offers-section {
+            padding: 80px 0;
+            overflow: hidden;
+        }
+
+        .offers-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+        .offers-scroll {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 0 20px 20px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold) var(--gray-dark);
+        }
+
+        .offers-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .offers-scroll::-webkit-scrollbar-track {
+            background: var(--gray-dark);
+            border-radius: 3px;
+        }
+
+        .offers-scroll::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 3px;
+        }
+
+        .offer-card {
+            min-width: 340px;
+            max-width: 340px;
+            height: 220px;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            scroll-snap-align: start;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .offer-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .offer-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .offer-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(13,13,13,0.95) 0%, rgba(13,13,13,0.3) 60%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 24px;
+        }
+
+        .offer-tag {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--black);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            width: fit-content;
+        }
+
+        .offer-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+
+        .offer-desc {
+            font-size: 13px;
+            color: var(--gray-lighter);
+        }
+
+        /* ===== EVENTS SECTION ===== */
+        .events-section {
+            background: var(--black-light);
+        }
+
+        .events-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .event-card {
+            background: var(--gray-dark);
+            border: 1px solid var(--gray);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .event-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-4px);
+        }
+
+        .event-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .event-card:hover .event-image img {
+            transform: scale(1.05);
+        }
+
+        .event-info {
+            padding: 20px;
+        }
+
+        .event-date {
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .event-title {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .event-desc {
+            font-size: 13px;
+            color: var(--gray-lighter);
+            line-height: 1.6;
+        }
+
+        /* ===== PARTNERS SECTION ===== */
+        .partners-section {
+            padding: 80px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+        }
+
+        .partner-card {
+            background: var(--gray-dark);
+            border: 1px solid var(--gray);
+            border-radius: 14px;
+            padding: 30px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            min-height: 120px;
+        }
+
+        .partner-card:hover {
+            border-color: var(--gold);
+            background: rgba(200, 168, 78, 0.05);
+        }
+
+        .partner-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gray-lighter);
+            text-align: center;
+        }
+
+        .partner-card:hover .partner-name {
+            color: var(--gold);
+        }
+
+        /* ===== STATS SECTION ===== */
+        .stats-section {
+            background: var(--black-light);
+            border-top: 1px solid var(--gray-dark);
+            border-bottom: 1px solid var(--gray-dark);
+        }
+
+        .stats-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 40px 30px;
+            background: var(--gray-dark);
+            border: 1px solid var(--gray);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-4px);
+        }
+
+        .stat-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+            background: rgba(200, 168, 78, 0.1);
+            border: 1px solid rgba(200, 168, 78, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--gold);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 15px;
+            color: var(--gray-lighter);
+            font-weight: 500;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--black-light);
+            border-top: 1px solid var(--gray-dark);
+            padding: 60px 20px 100px;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-brand p {
+            font-size: 13px;
+            color: var(--gray-light);
+            line-height: 1.8;
+            margin-top: 16px;
+        }
+
+        .footer-col-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--gray-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--gray-dark);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-bottom p {
+            font-size: 12px;
+            color: var(--gray-medium);
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-social {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--gray-dark);
+            border: 1px solid var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social:hover {
+            border-color: var(--gold);
+            background: rgba(200, 168, 78, 0.1);
+        }
+
+        .footer-social svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--gray-lighter);
+        }
+
+        .footer-social:hover svg {
+            fill: var(--gold);
+        }
+
+        /* ===== BOTTOM BAR ===== */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 2px solid var(--gold);
+            z-index: 1000;
+            padding: 14px 20px;
+        }
+
+        .bottom-bar-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .bottom-bar-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bottom-bar-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .bottom-bar-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--black);
+        }
+
+        .bottom-bar-info h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .bottom-bar-info p {
+            font-size: 12px;
+            color: var(--gray-lighter);
+        }
+
+        .bottom-bar-btn {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--black);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .bottom-bar-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(200, 168, 78, 0.4);
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal {
+            background: var(--gray-dark);
+            border: 1px solid var(--gold);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal::-webkit-scrollbar-track {
+            background: var(--gray-dark);
+            border-radius: 3px;
+        }
+
+        .modal::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 3px;
+        }
+
+        .modal-header {
+            padding: 30px 30px 20px;
+            border-bottom: 1px solid var(--gray);
+            position: sticky;
+            top: 0;
+            background: var(--gray-dark);
+            z-index: 1;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: var(--white);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(200, 168, 78, 0.2);
+            color: var(--gold);
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .modal-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        .modal-duration {
+            font-size: 13px;
+            color: var(--gold);
+            background: rgba(200, 168, 78, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .modal-body {
+            padding: 24px 30px 30px;
+        }
+
+        .modal-section {
+            margin-bottom: 28px;
+        }
+
+        .modal-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-section-title svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--gold);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .modal-section p {
+            font-size: 14px;
+            color: var(--gray-lighter);
+            line-height: 1.8;
+        }
+
+        .modal-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .modal-tag {
+            font-size: 12px;
+            color: var(--white);
+            background: var(--gray);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .modal-tools {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .modal-tool {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            background: rgba(200, 168, 78, 0.05);
+            border: 1px solid rgba(200, 168, 78, 0.15);
+            border-radius: 10px;
+            font-size: 13px;
+            color: var(--white);
+        }
+
+        .modal-tool-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(200, 168, 78, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .modal-tool-icon svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--gold);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .courses-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-description {
+                margin: 0 auto 36px;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-mec {
+                margin: 0 auto;
+            }
+
+            .courses-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-mobile-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bottom-bar-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .offer-card {
+                min-width: 280px;
+                max-width: 280px;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== DIVIDER ===== */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP NAVBAR -->
+    <nav class="top-navbar" id="topNavbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <div class="nav-logo-icon">UA</div>
+                <div class="nav-logo-text">Universidade <span>Aurora</span></div>
+            </a>
+            <div class="nav-links">
+                <a href="#" class="nav-link highlight"> Vestibular 2026</a>
+                <a href="#" class="nav-link">📝 Inscrição</a>
+                <a href="#" class="nav-link"> Bolsas de Estudo</a>
+                <a href="#" class="nav-link"> Login Aluno</a>
+                <a href="#" class="nav-link">👨‍ Login Professor</a>
+                <a href="#" class="nav-link">📚 Biblioteca</a>
+                <a href="#" class="nav-link">📞 Contato</a>
+            </div>
+            <button class="nav-mobile-toggle" id="mobileToggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-bg">
+            <img src="https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/1d92ec168-a2ec-462a-8df0-53ad176018d4.png" alt="Universidade Aurora Campus">
+        </div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge"> Instituição de Excelência Acadêmica</div>
+                <h1 class="hero-title">Transformando o Futuro Através da <span class="gold">Educação</span></h1>
+                <p class="hero-description">A Universidade Aurora é reconhecida nacionalmente pela qualidade do ensino, pesquisa e extensão. Com mais de 30 anos de tradição, formamos profissionais preparados para os desafios do mercado global. Nossa infraestrutura moderna e corpo docente qualificado garantem uma formação de excelência.</p>
+                <div class="hero-actions">
+                    <a href="#" class="btn btn-primary">Inscreva-se no Vestibular →</a>
+                    <a href="#cursos" class="btn btn-outline">Conheça os Cursos</a>
+                </div>
+            </div>
+            <div class="hero-mec">
+                <div class="mec-badge">
+                    <span class="mec-grade">4</span>
+                    <span class="mec-label">MEC</span>
+                </div>
+                <div class="mec-stars">
+                    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="mec-text">Conceito máximo<br>do MEC</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- COURSES SECTION -->
+    <section class="courses-section" id="cursos">
+        <div class="courses-container">
+            <div class="section-header fade-in">
+                <p class="section-subtitle">Formação Acadêmica</p>
+                <h2 class="section-title">Nossos Cursos de Graduação</h2>
+                <p class="section-desc">Escolha entre diversas modalidades de ensino e encontre o curso ideal para sua carreira profissional.</p>
+            </div>
+
+            <!-- PRESENCIAL -->
+            <div class="course-category fade-in">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                    </div>
+                    <h3 class="category-title">Cursos Presenciais</h3>
+                    <span class="category-count">5 cursos disponíveis</span>
+                </div>
+                <div class="courses-grid" id="presencial-grid"></div>
+            </div>
+
+            <!-- SEMI-PRESENCIAL -->
+            <div class="course-category fade-in">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3 class="category-title">Cursos Semipresenciais</h3>
+                    <span class="category-count">5 cursos disponíveis</span>
+                </div>
+                <div class="courses-grid" id="semipresencial-grid"></div>
+            </div>
+
+            <!-- EaD -->
+            <div class="course-category fade-in">
+                <div class="category-header">
+                    <div class="category-icon">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                    <h3 class="category-title">Cursos EaD (Ensino a Distância)</h3>
+                    <span class="category-count">5 cursos disponíveis</span>
+                </div>
+                <div class="courses-grid" id="ead-grid"></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- OFFERS SECTION -->
+    <section class="offers-section" id="ofertas">
+        <div class="offers-header">
+            <p class="section-subtitle">Oportunidades</p>
+            <h2 class="section-title">Ofertas, Descontos e Bolsas de Estudo</h2>
+        </div>
+        <div class="offers-scroll" id="offersScroll">
+            <div class="offer-card">
+                <img src="https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/1ebbfbeb6-8830-4a82-ab1a-4b57703bf5c9.png" alt="Bolsas de Estudo">
+                <div class="offer-overlay">
+                    <span class="offer-tag">BOLSA 50%</span>
+                    <h3 class="offer-title">Bolsa de Mérito Acadêmico</h3>
+                    <p class="offer-desc">Até 50% de desconto para alunos com alto desempenho no vestibular</p>
+                </div>
+            </div>
+            <div class="offer-card">
+                <img src="https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/1d92ec168-a2ec-462a-8df0-53ad176018d4.png" alt="Desconto Inscrição">
+                <div class="offer-overlay">
+                    <span class="offer-tag">INSCRIÇÃO GRÁTIS</span>
+                    <h3 class="offer-title">Taxa de Inscrição Isenta</h3>
+                    <p class="offer-desc">Inscreva-se gratuitamente no vestibular 2026.1</p>
+                </div>
+            </div>
+            <div class="offer-card">
+                <img src="https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/150ac3186-457d-40a9-bd30-0fb9d32938d0.png" alt="Tecnologia">
+                <div class="offer-overlay">
+                    <span class="offer-tag">PROGRAMA PROUNI</span>
+                    <h3 class="offer-title">Bolsas ProUni Disponíveis</h3>
+                    <p class="offer-desc">Bolsas integrais e parciais para cursos de tecnologia</p>
+                </div>
+            </div>
+            <div class="offer-card">
+                <img src="https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/1ddadc823-f35d-4e62-8025-7d5cf8aad1c4.png" alt="Saúde">
+                <div class="offer-overlay">
+                    <span class="offer-tag">DESCONTO 30%</span>
+                    <h3 class="offer-title">Programa Família Universitária</h3>
+                    <p class="offer-desc">Desconto para familiares de alunos matriculados</p>
+                </div>
+            </div>
+            <div class="offer-card">
+                <img src="https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/19021401a-53dc-499f-9f08-3ff35ae920fc.png" alt="Direito">
+                <div class="offer-overlay">
+                    <span class="offer-tag">FIES</span>
+                    <h3 class="offer-title">Financiamento FIES 100%</h3>
+                    <p class="offer-desc">Financie 100% do curso com o FIES</p>
+                </div>
+            </div>
+            <div class="offer-card">
+                <img src="https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/1cd343edf-71c8-4e06-8e18-d93a52bc609f.png" alt="Administração">
+                <div class="offer-overlay">
+                    <span class="offer-tag">EARLY BIRD</span>
+                    <h3 class="offer-title">Matrícula Antecipada</h3>
+                    <p class="offer-desc">15% de desconto na primeira mensalidade</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EVENTS SECTION -->
+    <section class="events-section" id="eventos">
+        <div class="events-container">
+            <div class="section-header fade-in">
+                <p class="section-subtitle">Vida Universitária</p>
+                <h2 class="section-title">Eventos da Universidade</h2>
+                <p class="section-desc">Competições, campeonatos, concursos, feiras e eventos culturais que enriquecem a experiência acadêmica.</p>
+            </div>
+            <div class="events-grid" id="eventsGrid">
+                <div class="event-card fade-in">
+                    <div class="event-image">
+                        <img src="https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/146387a2e-51ea-4022-96bb-820093a74c9b.png" alt="Evento Cultural">
+                    </div>
+                    <div class="event-info">
+                        <p class="event-date"> 15-20 Março 2026</p>
+                        <h3 class="event-title">Semana Cultural Aurora</h3>
+                        <p class="event-desc">Show de música, teatro, exposições de arte e workshops culturais gratuitos para toda a comunidade.</p>
+                    </div>
+                </div>
+                <div class="event-card fade-in">
+                    <div class="event-image">
+                        <img src="https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/148d59923-93a0-4b72-8eed-2000112d8375.png" alt="Campeonato Esportivo">
+                    </div>
+                    <div class="event-info">
+                        <p class="event-date"> 10-25 Abril 2026</p>
+                        <h3 class="event-title">Campeonato Interuniversitário</h3>
+                        <p class="event-desc">Competições de basquete, futsal, vôlei e atletismo entre universidades de todo o estado.</p>
+                    </div>
+                </div>
+                <div class="event-card fade-in">
+                    <div class="event-image">
+                        <img src="https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/1090a1537-693d-49e9-ad54-d527d1e67f41.png" alt="Feira de Ciências">
+                    </div>
+                    <div class="event-info">
+                        <p class="event-date">📅 05-08 Maio 2026</p>
+                        <h3 class="event-title">Feira de Inovação e Tecnologia</h3>
+                        <p class="event-desc">Apresentação de projetos de pesquisa, startups estudantis e workshops de inovação tecnológica.</p>
+                    </div>
+                </div>
+                <div class="event-card fade-in">
+                    <div class="event-image">
+                        <img src="https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/15092f460-efc7-41b5-bedf-dc5b13501234.png" alt="Formatura">
+                    </div>
+                    <div class="event-info">
+                        <p class="event-date"> 20 Junho 2026</p>
+                        <h3 class="event-title">Cerimônia de Graduação 2026</h3>
+                        <p class="event-desc">Celebração da conquista dos formandos com cerimônia solene e recepção para familiares.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- PARTNERS SECTION -->
+    <section id="parceiros">
+        <div class="partners-section">
+            <div class="section-header fade-in">
+                <p class="section-subtitle">Rede de Colaboração</p>
+                <h2 class="section-title">Empresas Parceiras e Patrocinadores</h2>
+                <p class="section-desc">Parcerias estratégicas que conectam nossos alunos ao mercado de trabalho.</p>
+            </div>
+            <div class="partners-grid" id="partnersGrid">
+                <div class="partner-card fade-in">
+                    <span class="partner-name"> TechCorp Brasil</span>
+                </div>
+                <div class="partner-card fade-in">
+                    <span class="partner-name">🏗️ Construtora Atlas</span>
+                </div>
+                <div class="partner-card fade-in">
+                    <span class="partner-name">🏥 Hospital São Lucas</span>
+                </div>
+                <div class="partner-card fade-in">
+                    <span class="partner-name">⚖️ Escritório Mendes & Adv.</span>
+                </div>
+                <div class="partner-card fade-in">
+                    <span class="partner-name">💼 Grupo InvestPlus</span>
+                </div>
+                <div class="partner-card fade-in">
+                    <span class="partner-name">🖥️ DataSoft Solutions</span>
+                </div>
+                <div class="partner-card fade-in">
+                    <span class="partner-name"> Banco Nacional</span>
+                </div>
+                <div class="partner-card fade-in">
+                    <span class="partner-name"> Consultoria Alpha</span>
+                </div>
+                <div class="partner-card fade-in">
+                    <span class="partner-name"> FIES / MEC</span>
+                </div>
+                <div class="partner-card fade-in">
+                    <span class="partner-name">🌐 Google for Education</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS SECTION -->
+    <section class="stats-section" id="estatisticas">
+        <div class="stats-container">
+            <div class="section-header fade-in">
+                <p class="section-subtitle">Números que nos orgulham</p>
+                <h2 class="section-title">Estatísticas 2026</h2>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="stat-number" data-target="12500">0</div>
+                    <p class="stat-label">Estudantes Ativos</p>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <div class="stat-number" data-target="3200">0</div>
+                    <p class="stat-label">Vagas Oferecidas em 2026</p>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    </div>
+                    <div class="stat-number" data-target="1850">0</div>
+                    <p class="stat-label">Graduações neste Ano</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="nav-logo">
+                        <div class="nav-logo-icon">UA</div>
+                        <div class="nav-logo-text">Universidade <span>Aurora</span></div>
+                    </a>
+                    <p>A Universidade Aurora é uma instituição de ensino superior comprometida com a excelência acadêmica, pesquisa científica e formação de profissionais que transformam a sociedade. Reconhecida pelo MEC com nota máxima.</p>
+                </div>
+                <div>
+                    <h4 class="footer-col-title">Institucional</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Sobre a Universidade</a></li>
+                        <li><a href="#">Reitoria</a></li>
+                        <li><a href="#">Corpo Docente</a></li>
+                        <li><a href="#">Infraestrutura</a></li>
+                        <li><a href="#">Trabalhe Conosco</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-col-title">Acadêmico</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Cursos de Graduação</a></li>
+                        <li><a href="#">Pós-Graduação</a></li>
+                        <li><a href="#">Mestrado e Doutorado</a></li>
+                        <li><a href="#">Biblioteca</a></li>
+                        <li><a href="#">Calendário Acadêmico</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-col-title">Acessos</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Portal do Aluno</a></li>
+                        <li><a href="#">Portal do Professor</a></li>
+                        <li><a href="#">Vestibular 2026</a></li>
+                        <li><a href="#">Bolsas de Estudo</a></li>
+                        <li><a href="#">Estágios</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-col-title">Contato</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">📍 Av. Aurora, 1000 - Centro</a></li>
+                        <li><a href="#">📞 (11) 3456-7890</a></li>
+                        <li><a href="#">📧 contato@univaurora.edu.br</a></li>
+                        <li><a href="#">🕐 Seg-Sex: 8h às 20h</a></li>
+                        <li><a href="#">🕐 Sáb: 8h às 14h</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Universidade Aurora. Todos os direitos reservados. CNPJ: 12.345.678/0001-90</p>
+                <div class="footer-socials">
+                    <a href="#" class="footer-social" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    </a>
+                    <a href="#" class="footer-social" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="none" stroke="currentColor" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2"/></svg>
+                    </a>
+                    <a href="#" class="footer-social" aria-label="Twitter">
+                        <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+                    </a>
+                    <a href="#" class="footer-social" aria-label="YouTube">
+                        <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="white"/></svg>
+                    </a>
+                    <a href="#" class="footer-social" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOTTOM BAR -->
+    <div class="bottom-bar">
+        <div class="bottom-bar-inner">
+            <div class="bottom-bar-text">
+                <div class="bottom-bar-icon">
+                    <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                </div>
+                <div class="bottom-bar-info">
+                    <h4>🎉 Vestibular 2026 — Inscrições Abertas!</h4>
+                    <p>Garanta sua vaga nos melhores cursos da região. Inscreva-se agora.</p>
+                </div>
+            </div>
+            <button class="bottom-bar-btn" onclick="window.location.href='#cursos'">Inscreva-se Agora →</button>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="courseModal">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">✕</button>
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="modal-meta">
+                    <span class="modal-price" id="modalPrice"></span>
+                    <span class="modal-duration" id="modalDuration"></span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3 class="modal-section-title">
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        Descrição Completa
+                    </h3>
+                    <p id="modalDescription"></p>
+                </div>
+                <div class="modal-section">
+                    <h3 class="modal-section-title">
+                        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                        Importância no Mercado de Trabalho
+                    </h3>
+                    <p id="modalMarket"></p>
+                </div>
+                <div class="modal-section">
+                    <h3 class="modal-section-title">
+                        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        Habilidades Desenvolvidas
+                    </h3>
+                    <div class="modal-tags" id="modalSkills"></div>
+                </div>
+                <div class="modal-section">
+                    <h3 class="modal-section-title">
+                        <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+                        Ferramentas e Programas
+                    </h3>
+                    <div class="modal-tools" id="modalTools"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== COURSE DATA =====
+        const courseData = {
+            presencial: [
+                {
+                    name: "Engenharia Civil",
+                    price: "R$ 1.890/mês",
+                    duration: "5 anos",
+                    desc: "Formação completa em projetos estruturais, construção e gestão de obras.",
+                    fullDesc: "O curso de Engenharia Civil da Universidade Aurora oferece uma formação abrangente e multidisciplinar, abrangendo desde os fundamentos de mecânica dos solos e resistência dos materiais até a gestão de grandes obras de infraestrutura. Os alunos terão acesso a laboratórios equipados com tecnologia de ponta e realizarão estágios supervisionados em empresas parceiras do setor da construção civil.",
+                    market: "A engenharia civil continua sendo uma das áreas com maior demanda no mercado de trabalho brasileiro. Com o crescimento do setor de infraestrutura e a retomada de grandes obras públicas e privadas, profissionais qualificados são cada vez mais valorizados. Engenheiros civis atuam em construtoras, escritórios de projetos, órgãos governamentais e como empreendedores.",
+                    skills: ["Projeto estrutural", "Gestão de obras", "Topografia", "Mecânica dos solos", "Orçamento de obras", "AutoCAD e BIM", "Fiscalização de obras"],
+                    tools: ["AutoCAD", "Revit", "CYPECAD", "Eberick", "MS Project", "TQS", "SketchUp"]
+                },
+                {
+                    name: "Medicina",
+                    price: "R$ 5.200/mês",
+                    duration: "6 anos",
+                    desc: "Formação médica de excelência com hospital universitário próprio.",
+                    fullDesc: "O curso de Medicina da Universidade Aurora é reconhecido pela excelência em ensino e pesquisa. Com um hospital universitário próprio e centros de simulação clínica de última geração, os alunos vivenciam a prática médica desde os primeiros anos. A grade curricular abrange todas as especialidades médicas, com ênfase em atenção primária à saúde e práticas integrativas.",
+                    market: "O mercado para médicos no Brasil é amplo e diversificado. Com a carência de profissionais em diversas regiões do país, médicos formados encontram oportunidades em hospitais, clínicas, postos de saúde, além de poderem atuar na área de pesquisa, ensino e gestão em saúde. A remuneração é uma das mais atraentes do mercado.",
+                    skills: ["Diagnóstico clínico", "Procedimentos cirúrgicos", "Anamnese", "Interpretação de exames", "Atendimento de emergência", "Saúde coletiva", "Medicina baseada em evidências"],
+                    tools: ["Prontuário eletrônico", "Equipamentos de diagnóstico", "Simuladores cirúrgicos", "Sistema de telemedicina", "Softwares de imagem médica"]
+                },
+                {
+                    name: "Direito",
+                    price: "R$ 1.450/mês",
+                    duration: "5 anos",
+                    desc: "Formação jurídica sólida com núcleos de prática jurídica.",
+                    fullDesc: "O curso de Direito da Universidade Aurora prepara o aluno para as diversas áreas do Direito, com uma abordagem que combina teoria jurídica e prática forense. O curso conta com núcleos de prática jurídica onde os alunos atendem a comunidade gratuitamente, desenvolvendo competências práticas essenciais para a advocacia e carreira jurídica.",
+                    market: "O Direito oferece um leque amplo de oportunidades profissionais: advocacia, magistratura, ministério público, carreiras jurídicas em empresas, consultoria, diplomacia e docência. Com as reformas legislativas recentes, há grande demanda por profissionais especializados em direito digital, compliance e direito ambiental.",
+                    skills: ["Argumentação jurídica", "Elaboração de petições", "Oratória", "Negociação", "Pesquisa jurídica", "Mediação de conflitos", "Direito processual"],
+                    tools: ["Jusbrasil", "Thomson Reuters", "PJe (Processo Judicial Eletrônico)", "Software de gestão de escritórios", "Bases de dados jurídicas"]
+                },
+                {
+                    name: "Administração",
+                    price: "R$ 1.120/mês",
+                    duration: "4 anos",
+                    desc: "Gestão empresarial com foco em inovação e empreendedorismo.",
+                    fullDesc: "O curso de Administração da Universidade Aurora desenvolve profissionais capacitados para liderar organizações em um mercado globalizado e competitivo. A grade curricular inclui disciplinas de gestão estratégica, marketing digital, finanças corporativas e empreendedorismo. Os alunos participam de projetos reais com empresas parceiras e têm acesso a incubadoras de startups.",
+                    market: "Administradores são profissionais versáteis com alta empregabilidade em diversos setores. Podem atuar como gestores, consultores, empreendedores ou em carreiras corporativas. Com a transformação digital, há crescente demanda por administradores com competências em gestão de dados, transformação digital e inovação.",
+                    skills: ["Gestão estratégica", "Marketing digital", "Análise financeira", "Liderança", "Gestão de projetos", "Empreendedorismo", "Planejamento organizacional"],
+                    tools: ["Excel avançado", "Power BI", "SAP", "Trello", "Google Analytics", "QuickBooks", "CRM Salesforce"]
+                },
+                {
+                    name: "Arquitetura e Urbanismo",
+                    price: "R$ 1.680/mês",
+                    duration: "5 anos",
+                    desc: "Design de espaços com sustentabilidade e inovação tecnológica.",
+                    fullDesc: "O curso de Arquitetura e Urbanismo da Universidade Aurora forma profissionais capazes de projetar espaços funcionais, sustentáveis e esteticamente relevantes. O curso abrange projeto arquitetônico, urbanismo, paisagismo, interiores e patrimônio histórico. Os alunos trabalham em estúdios com orientação personalizada e participam de concursos de projetos.",
+                    market: "Arquitetos e urbanistas têm atuação diversificada em escritórios de arquitetura, construtoras, órgãos públicos de planejamento urbano e como autônomos. Com a crescente preocupação com sustentabilidade e acessibilidade, profissionais especializados em green building e design universal são altamente requisitados.",
+                    skills: ["Projeto arquitetônico", "Urbanismo", "Design de interiores", "Paisagismo", "BIM", "Sustentabilidade", "Patrimônio histórico"],
+                    tools: ["AutoCAD", "SketchUp", "Revit", "V-Ray", "Lumion", "Adobe Photoshop", "Rhino 3D"]
+                }
+            ],
+            semipresencial: [
+                {
+                    name: "Ciência da Computação",
+                    price: "R$ 980/mês",
+                    duration: "4 anos",
+                    desc: "Desenvolvimento de software com aulas práticas presenciais.",
+                    fullDesc: "O curso de Ciência da Computação da Universidade Aurora combina aulas online de teoria com encontros presenciais para laboratórios práticos e projetos em equipe. O aluno aprende desde os fundamentos da programação até inteligência artificial, segurança da informação e desenvolvimento de sistemas complexos. O curso inclui um período obrigatório de estágio em empresa de tecnologia.",
+                    market: "O mercado de tecnologia é um dos mais dinâmicos e bem remunerados. Profissionais de ciência da computação são requisitados em startups, grandes empresas de tecnologia, bancos, e-commerce e setores diversos. Com a digitalização de todos os setores da economia, a demanda por desenvolvedores e cientistas de dados só tende a crescer.",
+                    skills: ["Programação orientada a objetos", "Algoritmos e estruturas de dados", "Inteligência artificial", "Desenvolvimento web", "Banco de dados", "Segurança da informação", "DevOps"],
+                    tools: ["Python", "Java", "React", "Node.js", "Docker", "Git", "TensorFlow"]
+                },
+                {
+                    name: "Psicologia",
+                    price: "R$ 1.250/mês",
+                    duration: "5 anos",
+                    desc: "Formação clínica com estágio supervisionado em clínicas parceiras.",
+                    fullDesc: "O curso de Psicologia da Universidade Aurora oferece formação completa nas abordagens clínica, organizacional, educacional e social. Com encontros presenciais quinzenais para atividades práticas e supervisões, o aluno desenvolve competências clínicas e técnicas de intervenção psicológica. O curso conta com clínica escola e parcerias com hospitais e centros de referência.",
+                    market: "Psicólogos atuam em consultórios, hospitais, empresas, escolas, órgãos públicos e ONGs. Há crescente demanda por profissionais em saúde mental, psicologia organizacional, neuropsicologia e psicologia do esporte. A telessaúde também abriu novas possibilidades de atuação remota.",
+                    skills: ["Avaliação psicológica", "Terapia cognitivo-comportamental", "Psicoterapia", "Neuropsicologia", "Psicologia organizacional", "Aconselhamento", "Pesquisa em psicologia"],
+                    tools: ["Testes psicológicos padronizados", "Software de gestão clínica", "Plataformas de telepsicologia", "EEG", "Ferramentas de neurofeedback"]
+                },
+                {
+                    name: "Engenharia de Produção",
+                    price: "R$ 1.350/mês",
+                    duration: "5 anos",
+                    desc: "Otimização de processos industriais e gestão da qualidade.",
+                    fullDesc: "O curso de Engenharia de Produção forma profissionais aptos a otimizar processos produtivos, melhorar a qualidade e reduzir custos em organizações. O modelo semipresencial permite ao aluno estudar teoria online e participar de atividades práticas em laboratórios de simulação industrial e visitas técnicas a fábricas.",
+                    market: "Engenheiros de produção são essenciais em indústrias, consultorias, logística e operações. Com a Indústria 4.0, há grande demanda por profissionais que dominem automação, análise de dados e gestão lean. São profissionais valorizados em multinacionais e grandes empresas brasileiras.",
+                    skills: ["Gestão da qualidade", "Lean Manufacturing", "Logística", "Pesquisa operacional", "Gestão de projetos", "Automação industrial", "Análise de processos"],
+                    tools: ["Minitab", "Arena", "SAP PP", "Six Sigma", "MS Project", "Python para análise de dados", "AutoCAD"]
+                },
+                {
+                    name: "Enfermagem",
+                    price: "R$ 1.150/mês",
+                    duration: "4 anos",
+                    desc: "Cuidados de saúde com prática clínica em hospitais.",
+                    fullDesc: "O curso de Enfermagem da Universidade Aurora prepara profissionais para atuar na promoção, prevenção e recuperação da saúde. O modelo semipresencial combina disciplinas teóricas online com práticas clínicas em hospitais e unidades básicas de saúde parceiros. O aluno desenvolve competências técnicas e humanísticas essenciais para o cuidado em saúde.",
+                    market: "Enfermeiros são profissionais essenciais e com alta empregabilidade em hospitais, clínicas, unidades de saúde, empresas e como autônomos. Com o envelhecimento da população e a expansão do SUS, a demanda por enfermeiros qualificados é constante. Há também oportunidades em pesquisas clínicas e gestão hospitalar.",
+                    skills: ["Cuidados de enfermagem", "Administração de medicamentos", "Suporte vital básico", "Enfermagem cirúrgica", "Saúde da família", "Gestão hospitalar", "Cuidados intensivos"],
+                    tools: ["Prontuário eletrônico", "Equipamentos de monitoramento", "Bombas de infusão", "Sistema de triagem", "Softwares de gestão hospitalar"]
+                },
+                {
+                    name: "Contabilidade",
+                    price: "R$ 890/mês",
+                    duration: "4 anos",
+                    desc: "Gestão contábil e fiscal com software profissional.",
+                    fullDesc: "O curso de Ciências Contábeis da Universidade Aurora forma profissionais capacitados para gerir a contabilidade de empresas, escritórios de contabilidade e órgãos públicos. O modelo semipresencial permite o estudo das normas contábeis online com encontros presenciais para práticas em software contábil e análise de casos reais.",
+                    market: "Contadores são indispensáveis em qualquer organização. O mercado é amplo e estável, com oportunidades em escritórios de contabilidade, empresas de todos os portes, órgãos governamentais e como profissionais autônomos. Com as mudanças na legislação tributária e a digitalização da contabilidade, há demanda por profissionais atualizados.",
+                    skills: ["Contabilidade geral", "Auditoria", "Tributação", "Custos", "Contabilidade gerencial", "Perícia contábil", "Planejamento fiscal"],
+                    tools: ["SPED", "Sistema Contábil Domínio", "Excel avançado", "SAP FI", "eSocial", "Software de auditoria", "Power BI"]
+                }
+            ],
+            ead: [
+                {
+                    name: "Pedagogia",
+                    price: "R$ 580/mês",
+                    duration: "4 anos",
+                    desc: "Formação docente com prática em escolas parceiras.",
+                    fullDesc: "O curso de Pedagogia EaD da Universidade Aurora forma educadores preparados para atuar na educação infantil, ensino fundamental, gestão escolar e educação corporativa. O curso combina aulas online ao vivo e gravadas com encontros presenciais obrigatórios para estágios e práticas pedagógicas em escolas parceiras da rede pública e privada.",
+                    market: "Pedagogos atuam como professores, coordenadores pedagógicos, diretores de escola, consultores educacionais e em empresas na área de treinamento e desenvolvimento. Com a valorização da educação e as novas tecnologias educacionais, há oportunidades crescentes em edtechs e ensino corporativo.",
+                    skills: ["Didática", "Gestão escolar", "Psicopedagogia", "Alfabetização", "Tecnologia educacional", "Currículo escolar", "Avaliação educacional"],
+                    tools: ["Google Classroom", "Moodle", "Khan Academy", "Canva para educação", "Plataformas de vídeoaula", "Ferramentas de gamificação"]
+                },
+                {
+                    name: "Marketing Digital",
+                    price: "R$ 650/mês",
+                    duration: "3 anos",
+                    desc: "Estratégias digitais com foco em resultados mensuráveis.",
+                    fullDesc: "O curso de Marketing Digital EaD da Universidade Aurora é voltado para profissionais que desejam dominar as estratégias de marketing no ambiente digital. O curso abrange SEO, mídias sociais, marketing de conteúdo, e-mail marketing, Google Ads, analytics e gestão de marcas digitais. Projetos práticos com empresas reais complementam a formação.",
+                    market: "O marketing digital é uma das áreas com maior crescimento e demanda no mercado. Profissionais qualificados são requisitados em agências, startups, e-commerces, empresas de todos os portes e como freelancers. Com a migração de orçamentos publicitários para o digital, as oportunidades só aumentam.",
+                    skills: ["SEO e SEM", "Marketing de conteúdo", "Social media", "Google Ads", "Analytics", "Branding digital", "Copywriting"],
+                    tools: ["Google Analytics", "Google Ads", "Facebook Ads Manager", "SEMrush", "Hootsuite", "Canva", "Mailchimp"]
+                },
+                {
+                    name: "Design Gráfico",
+                    price: "R$ 720/mês",
+                    duration: "3 anos",
+                    desc: "Criação visual para mídias digitais e impressas.",
+                    fullDesc: "O curso de Design Gráfico EaD da Universidade Aurora desenvolve a criatividade e competências técnicas do aluno para criar soluções visuais impactantes. O curso abrange identidade visual, editoração, design web, motion graphics e UX/UI design. Aulas ao vivo, projetos práticos e um portfólio profissional ao final do curso.",
+                    market: "Designers gráficos são requisitados em agências de publicidade, estúdios de design, departamentos de marketing de empresas, editoras e como freelancers. Com o crescimento do marketing digital, há grande demanda por designers que dominem tanto design para web quanto para mídias impressas.",
+                    skills: ["Identidade visual", "Tipografia", "Editoração", "UX/UI Design", "Motion graphics", "Fotografia", "Ilustração"],
+                    tools: ["Adobe Photoshop", "Adobe Illustrator", "Figma", "Adobe InDesign", "After Effects", "Blender", "Procreate"]
+                },
+                {
+                    name: "Gestão de RH",
+                    price: "R$ 590/mês",
+                    duration: "3 anos",
+                    desc: "Gestão de pessoas e cultura organizacional.",
+                    fullDesc: "O curso de Gestão de Recursos Humanos EaD da Universidade Aurora forma profissionais aptos a gerir o capital humano das organizações. O curso abrange recrutamento e seleção, treinamento e desenvolvimento, gestão de desempenho, legislação trabalhista e cultura organizacional. Estudos de caso e projetos com empresas reais enriquecem a formação.",
+                    market: "Profissionais de RH são essenciais em organizações de todos os portes. Com as mudanças no mundo do trabalho, há demanda por gestores de RH que dominem gestão por competências, employer branding, diversidade e inclusão, e people analytics. O home office também criou novas demandas para a área.",
+                    skills: ["Recrutamento e seleção", "Treinamento e desenvolvimento", "Gestão de desempenho", "Legislação trabalhista", "People analytics", "Employer branding", "Gestão de conflitos"],
+                    tools: ["SAP SuccessFactors", "LinkedIn Recruiter", "Workday", "Excel avançado", "Plataformas de assessment", "Softwares de feedback"]
+                },
+                {
+                    name: "Logística",
+                    price: "R$ 540/mês",
+                    duration: "2 anos",
+                    desc: "Cadeia de suprimentos e gestão de operações.",
+                    fullDesc: "O curso de Logística EaD da Universidade Aurora prepara profissionais para gerir a cadeia de suprimentos, desde o fornecimento de matérias-primas até a entrega ao consumidor final. O curso abrange gestão de estoques, transporte, armazenagem, compras e logística reversa, com foco em eficiência e sustentabilidade.",
+                    market: "Logística é uma área estratégica com alta empregabilidade. Com o crescimento do e-commerce e a complexidade das cadeias globais de suprimentos, logísticos são essenciais em indústrias, distribuidoras, e-commerces e operadores logísticos. Profissionais com domínio de tecnologia e sustentabilidade são especialmente valorizados.",
+                    skills: ["Gestão de estoques", "Transporte", "Armazenagem", "Compras", "Logística reversa", "Planejamento de demanda", "Supply chain"],
+                    tools: ["SAP WM", "WMS", "TMS", "Excel avançado", "Power BI", "ERP", "Simuladores de logística"]
+                }
+            ]
+        };
+
+        // ===== RENDER COURSE CARDS =====
+        function renderCourses(category, gridId, images) {
+            const grid = document.getElementById(gridId);
+            const courses = courseData[category];
+            grid.innerHTML = '';
+
+            courses.forEach((course, index) => {
+                const card = document.createElement('div');
+                card.className = 'course-card';
+                card.innerHTML = `
+                    <div class="card-content">
+                        <h4 class="card-title">${course.name}</h4>
+                        <div class="card-meta">
+                            <span class="card-price">${course.price}</span>
+                            <span class="card-duration">${course.duration}</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-text">
+                                <p class="card-desc">${course.desc}</p>
+                            </div>
+                            <div class="card-image">
+                                <img src="${images[index]}" alt="${course.name}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="card-btn" onclick="openModal('${category}', ${index})">Saber mais →</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Image mappings
+        const presencialImages = [
+            "https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/150ac3186-457d-40a9-bd30-0fb9d32938d0.png",
+            "https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/1ddadc823-f35d-4e62-8025-7d5cf8aad1c4.png",
+            "https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/19021401a-53dc-499f-9f08-3ff35ae920fc.png",
+            "https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/1cd343edf-71c8-4e06-8e18-d93a52bc609f.png",
+            "https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/146082c9c-66e0-4cd6-989d-917da4f177e9.png"
+        ];
+
+        const semipresencialImages = [
+            "https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/19cff86bc-e556-4df3-9534-922a15a7a189.png",
+            "https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/138aa3b6c-c33a-450a-9eed-87c8b6c59f99.png",
+            "https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/150ac3186-457d-40a9-bd30-0fb9d32938d0.png",
+            "https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/1172780d1-30ce-40c0-8c6c-d229615e6c29.png",
+            "https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/1cd343edf-71c8-4e06-8e18-d93a52bc609f.png"
+        ];
+
+        const eadImages = [
+            "https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/17afe305a-2e5e-4bf2-b90a-fe5067754da5.png",
+            "https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/19cff86bc-e556-4df3-9534-922a15a7a189.png",
+            "https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/146082c9c-66e0-4cd6-989d-917da4f177e9.png",
+            "https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/1cd343edf-71c8-4e06-8e18-d93a52bc609f.png",
+            "https://image.qwenlm.ai/public_source/8affef0a-a5ce-444c-aa6b-70732f2a8114/14f4e1303-0682-4eeb-ac94-769b39627862.png"
+        ];
+
+        renderCourses('presencial', 'presencial-grid', presencialImages);
+        renderCourses('semipresencial', 'semipresencial-grid', semipresencialImages);
+        renderCourses('ead', 'ead-grid', eadImages);
+
+        // ===== MODAL =====
+        function openModal(category, index) {
+            const course = courseData[category][index];
+            const modal = document.getElementById('courseModal');
+
+            document.getElementById('modalTitle').textContent = course.name;
+            document.getElementById('modalPrice').textContent = course.price;
+            document.getElementById('modalDuration').textContent = course.duration;
+            document.getElementById('modalDescription').textContent = course.fullDesc;
+            document.getElementById('modalMarket').textContent = course.market;
+
+            const skillsContainer = document.getElementById('modalSkills');
+            skillsContainer.innerHTML = course.skills.map(s => `<span class="modal-tag">${s}</span>`).join('');
+
+            const toolsContainer = document.getElementById('modalTools');
+            toolsContainer.innerHTML = course.tools.map(t => `
+                <div class="modal-tool">
+                    <div class="modal-tool-icon">
+                        <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    </div>
+                    <span>${t}</span>
+                </div>
+            `).join('');
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('courseModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        document.getElementById('courseModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // ===== SCROLL ANIMATIONS =====
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // ===== NAVBAR SCROLL =====
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('topNavbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ===== COUNTER ANIMATION =====
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number[data-target]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000;
+                const start = 0;
+                const startTime = performance.now();
+
+                function updateCounter(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    const current = Math.floor(start + (target - start) * eased);
+                    counter.textContent = current.toLocaleString('pt-BR');
+
+                    if (progress < 1) {
+                        requestAnimationFrame(updateCounter);
+                    }
+                }
+
+                requestAnimationFrame(updateCounter);
+            });
+        }
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const statsSection = document.getElementById('estatisticas');
+        if (statsSection) statsObserver.observe(statsSection);
+
+        // ===== MOBILE NAV TOGGLE =====
+        document.getElementById('mobileToggle').addEventListener('click', function() {
+            const links = document.querySelector('.nav-links');
+            if (links.style.display === 'flex') {
+                links.style.display = 'none';
+            } else {
+                links.style.display = 'flex';
+                links.style.flexDirection = 'column';
+                links.style.position = 'absolute';
+                links.style.top = '70px';
+                links.style.left = '0';
+                links.style.right = '0';
+                links.style.background = 'rgba(13,13,13,0.98)';
+                links.style.padding = '20px';
+                links.style.borderBottom = '1px solid var(--gray-dark)';
+            }
+        });
+    </script>
+</body>
+</html>
+
